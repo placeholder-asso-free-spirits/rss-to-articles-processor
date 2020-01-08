@@ -1,4 +1,4 @@
-# RSS To Articles 
+# RSS To Articles 
 
 Takes RSS entries as JSON in input,
 output an article.
