@@ -1,0 +1,37 @@
+es:
+  host-and-port: "elasticsearch-data-data.elasticsearch.svc.cluster.local:9200"
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: articles
+          group: rss-to-articles-processors
+          binder: rabbit
+        output:
+          destination: processing
+      rabbit:
+        bindings:
+          input:
+            consumer:
+              bindingRoutingKey: "json.rss"
+          output:
+            producer:
+              bindingRoutingKey: "json.articles"
+              routing-key-expression: '"json.articles"'
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: test
+                password: test
+                virtual-host: /
+logging:
+  level:
+    fr:
+      asso:
+        placeholder: DEBUG
